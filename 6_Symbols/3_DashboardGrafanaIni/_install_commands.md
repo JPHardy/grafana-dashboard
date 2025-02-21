@@ -1,22 +1,22 @@
 - minikube delete
-- minikube start --memory=4096 --cpus=2 
-- kubectl create namespace grafana-monitoring 
-- helm repo add bitnami https://charts.bitnami.com/bitnami  
-- helm repo update 
+1 - minikube start --memory=4096 --cpus=2  
+2 - kubectl create namespace grafana-monitoring 
+3 - helm repo add bitnami https://charts.bitnami.com/bitnami  
+3 - helm repo update 
 - cd 6_Symbols/3_DashboardGrafanaIni
 - clear
 
-- kubectl apply -f myconfig.yaml -n grafana-monitoring 
+4 - kubectl apply -f myconfig.yaml -n grafana-monitoring 
  
-- kubectl apply -f grafana-datasource.yaml -n grafana-monitoring
+5 - kubectl apply -f grafana-datasource.yaml -n grafana-monitoring
 
-- kubectl apply -f configmap_dashboard_1.yaml -n grafana-monitoring
-- kubectl apply -f configmap_dashboard_2.yaml -n grafana-monitoring
+6- kubectl apply -f configmap_dashboard_1.yaml -n grafana-monitoring
+6- kubectl apply -f configmap_dashboard_2.yaml -n grafana-monitoring
 
-- kubectl create secret generic grafana-datasource-secret --from-file=datasource-secret.yaml -n grafana-monitoring
+7 - kubectl create secret generic grafana-datasource-secret --from-file=datasource-secret.yaml -n grafana-monitoring
 
 - kubectl get secret grafana-datasource-secret -n grafana-monitoring
-- helm install grafana bitnami/grafana --namespace grafana-monitoring -f grafana-dashboard-deployment.yaml 
+8 - helm install grafana bitnami/grafana --namespace grafana-monitoring -f grafana-dashboard-deployment.yaml 
 
 
 - provisioning/datasources >>> provision datasource is missing
@@ -32,7 +32,7 @@
 
 
 
-- kubectl port-forward -n grafana-monitoring svc/grafana 3000:3000  
+9 - kubectl port-forward -n grafana-monitoring svc/grafana 3000:3000  
 
 
 

@@ -1,0 +1,15 @@
+version: '3'  # 📝 Specifies the Docker Compose file format version being used.
+
+services:  # 🛠️ Defines the list of services to be run as part of this Docker Compose setup.
+  grafana:  # 📊 The Grafana service configuration begins here.
+    image: grafana/grafana-enterprise  # 🖼️ Specifies the Grafana Enterprise Docker image to use.
+    container_name: grafana  # 🏷️ Sets the name of the container as "grafana".
+    restart: unless-stopped  # 🔄 Ensures the container restarts automatically unless stopped manually.
+    ports:  # 🌐 Maps ports to allow access to the Grafana service.
+      - '3000:3000'  # 🌐 Maps the host's port 3000 to the container's port 3000 for web access.
+    volumes:  # 💾 Defines storage options for persistent data and configuration.
+      - grafana-storage:/var/lib/grafana  # 💾 Mounts a volume for Grafana's database and storage.
+      - ./provisioning:/etc/grafana/provisioning  # ⚙️ Mounts local provisioning files for Grafana configurations.
+
+volumes:  # 📦 Declares the named volumes for persistent data storage.
+  grafana-storage: {}  # 💾 Defines the "grafana-storage" volume for storing Grafana data.

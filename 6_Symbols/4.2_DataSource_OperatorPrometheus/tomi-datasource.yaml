@@ -1,0 +1,32 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: grafanadatasource-sample
+spec:
+  valuesFrom:
+    - targetPath: "basicAuthUser"
+      valueFrom:
+        secretKeyRef:
+          name: "credentials"
+          key: "PROMETHEUS_USERNAME"
+    - targetPath: "secureJsonData.basicAuthPassword"
+      valueFrom:
+        secretKeyRef:
+          name: "credentials"
+          key: "PROMETHEUS_PASSWORD"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  datasource:
+    name: prometheus
+    type: prometheus
+    access: proxy
+    basicAuth: true
+    url: http://prometheus-operated.default.svc.cluster.local:9090
+    isDefault: true
+    basicAuthUser: ${PROMETHEUS_USERNAME}
+    jsonData:
+      "tlsSkipVerify": true
+      "timeInterval": "5s"
+    secureJsonData:
+      "basicAuthPassword": ${PROMETHEUS_PASSWORD} # Notice the braces around PROMETHEUS_PASSWORD

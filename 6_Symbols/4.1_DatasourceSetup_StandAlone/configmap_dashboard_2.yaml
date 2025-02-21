@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-config2
+  namespace: grafana-monitoring
+  labels:
+    grafana_dashboard: "2"
+data:
+  grafana_dashboard_config2.json: |
+    {
+      "id": null,
+      "title": "Random Walk Dashboard2",
+      "tags": [],
+      "timezone": "browser",
+      "schemaVersion": 16,
+      "version": 0,
+      "overwrite": true,
+      "panels": [
+        {
+          "type": "graph",
+          "title": "Random Walk",
+          "gridPos": { "x": 0, "y": 0, "w": 24, "h": 9 },
+          "datasource": "Random Walk Data",
+          "targets": [
+            {
+              "refId": "A",
+              "scenarioId": "random_walk"
+            }
+          ]
+        }
+      ]
+    }

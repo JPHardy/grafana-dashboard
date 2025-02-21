@@ -1,6 +1,0 @@
-apiVersion: 1
-datasources:
-  - name: Random Walk Data
-    type: testdata
-    access: proxy
-    isDefault: true

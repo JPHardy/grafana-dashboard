@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources2
+  labels:
+    grafana_datasource: "2"
+data:
+  datasource2.yaml: |
+    apiVersion: 1
+
+    datasources:
+      - name: TestData
+        type: testdata

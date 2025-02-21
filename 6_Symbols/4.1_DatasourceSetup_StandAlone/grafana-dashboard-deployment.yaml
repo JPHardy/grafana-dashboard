@@ -1,0 +1,102 @@
+admin:
+  ## @param admin.user Grafana admin username
+  ##
+  user: "admin"
+  ## @param admin.password Admin password. If a password is not provided a random password will be generated
+  ##
+  ## Test this to make sure the values yaml used your values not the default values...if the structure fails it defaults back to default values
+  password: "your-password"
+
+config:
+  useGrafanaIniFile: false
+  grafanaIniConfigMap: myconfig
+
+dashboardsProvider:
+  enabled: true
+
+dashboardsConfigMaps:
+  - configMapName: grafana-dashboard-config1
+    fileName: grafana_dashboard_config1.json
+  - configMapName: grafana-dashboard-config2
+    fileName: grafana_dashboard_config2.json
+
+datasources:
+  secretName: "grafana-datasource-secret"
+        
+grafana:
+  ## Environment variables
+  ##
+  envVars:
+    - name: GF_LOG_LEVEL
+      value: debug
+
+  ## Number of Grafana replicas
+  ##
+  replicaCount: 1
+
+  ## Persistence configuration
+  ##
+  persistence:
+    enabled: true
+    size: 100Mi
+    storageClassName: "standard"  # Define storage class if needed
+    accessModes:
+      - ReadWriteOnce  # Access mode for the persistent volume
+
+  ## Additional volumes
+  ##
+  extraVolumes:
+    - name: grafana-storage
+      emptyDir: {}
+    - name: grafana-datasource-secret
+      secret:
+        secretName: grafana-datasource-secret
+    - name: datasource
+      configMap:
+        name: grafana-datasources
+
+
+  ## Volume mounts
+  ##
+  volumeMounts:
+    - name: grafana-storage
+      mountPath: /opt/bitnami/grafana
+    - name: datasource
+      mountPath: /opt/bitnami/grafana/provisioning/datasources
+
+
+  ## Resources configuration
+  ##
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+## Service parameters
+##
+service:
+  ## @param service.type Kubernetes Service type
+  ##
+  type: ClusterIP
+  ## @param service.clusterIP Grafana service Cluster IP
+  ## e.g.:
+  ## clusterIP: None
+  ##
+  # clusterIP: ""
+  ## @param service.ports.grafana Grafana service port
+  ##
+  ports:
+    grafana: 3000
+
+sidecars:
+  initContainers:
+    - name: init-grafana
+      image: busybox
+      imagePullPolicy: Always
+      command: ['sh', '-c', 'mkdir -p /opt/bitnami/grafana/provisioning/datasources']
+      volumeMounts:
+        - name: grafana-storage
+          mountPath: /opt/bitnami/grafana

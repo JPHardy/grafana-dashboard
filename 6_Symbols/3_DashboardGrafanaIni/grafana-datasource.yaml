@@ -5,7 +5,7 @@ metadata:
   labels:
     grafana_datasource: "1"
 data:
-  time-series-datasource.yaml: |
+  tim: |
     apiVersion: 1
     datasources:
       - name: Time Series Data
