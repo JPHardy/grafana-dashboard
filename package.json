@@ -1,0 +1,15 @@
+{
+  "name": "grafana-dashboard",
+  "version": "1.0.0",
+  "description": "![Journey](https://github.com/rifaterdemsahin/grafana-dashboard/blob/main/4_UI/4.35.1_drawio.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^14.2.0"
+  }
+}
